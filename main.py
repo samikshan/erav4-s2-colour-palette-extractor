@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, JSONResponse
 import numpy as np
@@ -93,9 +93,12 @@ async def index():
         return HTMLResponse(content=f.read())
 
 @app.post("/extract-colors")
-async def extract_colors_endpoint(file: UploadFile = File(...), num_colors: int = 6):
+async def extract_colors_endpoint(file: UploadFile = File(...), num_colors: int = Form(6)):
     """Extract dominant colors from uploaded image"""
     try:
+        # Debug: Print the received num_colors value
+        print(f"DEBUG: Received num_colors = {num_colors} (type: {type(num_colors)})")
+        
         # Validate file type
         if not file.content_type.startswith("image/"):
             raise HTTPException(status_code=400, detail="File must be an image")
@@ -106,6 +109,9 @@ async def extract_colors_endpoint(file: UploadFile = File(...), num_colors: int 
         
         # Extract color palette
         palette = extract_colors(image, num_colors)
+        
+        # Debug: Print the actual palette length
+        print(f"DEBUG: Generated palette has {len(palette)} colors")
         
         # Create reduced color image
         reduced_image_data = create_reduced_image(image, palette)
