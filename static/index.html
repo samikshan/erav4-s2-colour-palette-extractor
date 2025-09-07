@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Extractor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 Color Palette Extractor</h1>
+            <p>Upload an image to extract its dominant colors and see a color-reduced version</p>
+        </header>
+
+        <main>
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <div class="upload-icon">📁</div>
+                        <p>Click to upload an image or drag & drop</p>
+                        <p class="upload-hint">Supports JPG, PNG, GIF</p>
+                    </div>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+
+                <div class="controls">
+                    <label for="numColors">Number of colors to extract:</label>
+                    <input type="range" id="numColors" min="3" max="10" value="6">
+                    <span id="numColorsValue">6</span>
+                </div>
+
+                <button id="extractBtn" class="extract-btn" disabled>Extract Colors</button>
+            </div>
+
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Extracting colors...</p>
+            </div>
+
+            <div class="results" id="results" style="display: none;">
+                <div class="images-container">
+                    <div class="image-section">
+                        <h3>Original Image</h3>
+                        <img id="originalImage" alt="Original">
+                    </div>
+                    
+                    <div class="image-section">
+                        <h3>Color-Reduced Image</h3>
+                        <img id="reducedImage" alt="Reduced colors">
+                    </div>
+                </div>
+
+                <div class="palette-section">
+                    <h3>Extracted Color Palette</h3>
+                    <div class="palette-container" id="paletteContainer">
+                        <!-- Color swatches will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
